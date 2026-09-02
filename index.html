@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bike EMI Calculator India – Bike Loan EMI Calculator</title>
+<meta name="description" content="Free Bike EMI Calculator India. Calculate monthly bike loan EMI, loan amount, interest, total payable and total interest for new and old bikes.">
+<meta name="keywords" content="bike EMI calculator, bike loan EMI calculator, bike EMI calculator India, two wheeler EMI calculator, motorcycle loan EMI calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://srinivasanblue.github.io/White/">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" />
+<style>
+  :root {
+    --bg: #14151A; --panel: #1A1C23; --panel2: #16171D; --border: #2E313C;
+    --text: #EDEDED; --muted: #8B8D98; --muted2: #5B5D68;
+    --amber: #F2A93B; --teal: #5EC8B8; --red: #E5484D;
+  }
+  html[data-theme="light"] {
+    --bg: #F4F5F7; --panel: #FFFFFF; --panel2: #F0F1F4; --border: #D6D9E0;
+    --text: #1B1C22; --muted: #5B5D68; --muted2: #7B7D88;
+    --amber: #B8720A; --teal: #128173; --red: #C22B30;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Oswald',sans-serif; font-size:18px; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+  .card { width:100%; max-width:900px; background:var(--panel); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .header { padding:24px 32px 16px; border-bottom:1px solid var(--border); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+  .toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:4px; }
+  .toggle button { border:none; background:transparent; color:var(--muted); font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:500; padding:7px 16px; border-radius:999px; cursor:pointer; }
+  .toggle button.active { background:#4FC3F7; color:#14151A; }
+  html[data-theme="light"] .toggle button.active { color:#fff; }
+  .theme-toggle { border:1px solid var(--border); background:var(--bg); color:var(--text); width:40px; height:40px; border-radius:50%; cursor:pointer; font-size:18px; }
+  .field.hidden { display:none; }
+  .field-row:has(.field.hidden) .field:not(.hidden) { flex:none; width:100%; }
+  .eyebrow { font-size:13px; letter-spacing:.25em; text-transform:uppercase; color:#4FC3F7; font-weight:500; }
+  .grid { display:grid; grid-template-columns:1fr; }
+  @media (min-width:768px) { .grid{grid-template-columns:1fr 1fr}.input-panel{border-right:1px solid var(--border);border-bottom:none!important;} }
+  .input-panel { padding:32px; border-bottom:1px solid var(--border); }
+  .field { margin-bottom:20px; }
+  .field-row { display:flex; gap:16px; align-items:flex-end; }
+  .field-row .field { flex:1; min-width:0; margin-bottom:20px; }
+  .field-top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .field-label { font-size:18px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .field-suffix { font-size:16px; font-family:'JetBrains Mono',monospace; color:#4FC3F7; }
+  .field-suffix.accent { color:#4FC3F7; }
+  input[type="number"], select.tenure-select { width:100%; background:var(--panel); border:1px solid var(--border); border-radius:6px; padding:12px 14px; color:var(--text); font-family:'JetBrains Mono',monospace; font-size:22px; outline:none; }
+  select.tenure-select { appearance:none; -webkit-appearance:none; cursor:pointer; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238B8D98' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+  input[type="number"]:focus, select.tenure-select:focus { border-color:rgba(79,195,247,.6); box-shadow:0 0 0 3px rgba(79,195,247,.25); }
+  input.accent { border-color:rgba(79,195,247,.5); }
+  .link-row { display:flex; align-items:stretch; gap:16px; padding-top:16px; margin-top:4px; border-top:1px solid var(--border); }
+  .link-row .field { flex:1; min-width:0; display:flex; flex-direction:column; justify-content:flex-end; }
+  .fold-toggle { display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; padding:4px 0; }
+  .fold-toggle .field-label { margin:0; }
+  .fold-arrow { color:var(--muted); font-size:14px; transition:transform .15s ease; }
+  .fold-arrow.open { transform:rotate(90deg); }
+  .fold-body { overflow:hidden; max-height:0; transition:max-height .18s ease; }
+  .fold-body.open { max-height:200px; }
+  .fold-body-inner { padding-top:10px; }
+  .hint { font-size:13px; color:var(--muted2); margin-top:10px; }
+  .readout-panel { padding:32px; background:var(--panel2); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  svg.gauge { display:block; margin:0 auto; }
+  .emi-label { font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; text-align:center; }
+  .emi-value { font-family:'JetBrains Mono',monospace; font-size:60px; font-weight:700; color:#4FC3F7; text-align:center; }
+  .emi-sub { font-size:13px; color:#4FC3F7; font-family:'JetBrains Mono',monospace; text-align:center; margin-top:4px; }
+  .stats { width:100%; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:17px; }
+  .stat-label { font-size:14px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; font-weight:700; }
+  .stat-value { font-family:'JetBrains Mono',monospace; color:var(--text); font-size:22px; font-weight:800; }
+  .floor-note { font-size:12px; color:var(--muted2); margin-top:16px; text-align:center; max-width:280px; }
+  .footer { padding:12px 32px; border-top:1px solid var(--border); font-size:13px; color:var(--muted2); }
+  @media (min-width:1024px) {
+    body{font-size:21px;padding:40px}.card{max-width:min(1400px,92vw)}.eyebrow{font-size:15px}
+    .toggle button{font-size:13px;padding:9px 20px}.theme-toggle{width:44px;height:44px;font-size:20px}
+    .input-panel,.readout-panel{padding:40px}.field-label{font-size:21px}.field-suffix{font-size:17px}
+    input[type=number]{font-size:26px;padding:14px 16px}.hint{font-size:14px}svg.gauge{width:260px;height:166px}
+    .emi-label{font-size:15px}.emi-value{font-size:72px}.emi-sub{font-size:15px}.stat-label{font-size:15px}.stat-value{font-size:24px}.floor-note{font-size:13px;max-width:340px}.footer{font-size:14px}
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div>
+      <h1 style="margin:0 0 4px;font-size:28px;font-weight:700;">Bike EMI Calculator</h1>
+      <div class="eyebrow">Two-Wheeler Finance</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="toggle"><button type="button" id="modeNewBtn" class="active" onclick="setMode('new')">New Bike</button><button type="button" id="modeOldBtn" onclick="setMode('old')">Old Bike</button></div>
+      <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Switch theme">🌙</button>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="input-panel">
+      <div class="field-row">
+        <div class="field"><div class="field-top"><label class="field-label" id="bikeAmountLabel">Bike Amount</label><span class="field-suffix">₹</span></div><input type="number" id="bikeAmount" value="" step="5000" min="0" /></div>
+        <div class="field" id="downPaymentField"><div class="field-top"><label class="field-label">Down Payment</label><span class="field-suffix">₹</span></div><input type="number" id="downPayment" value="" step="5000" min="0" /></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><div class="field-top"><label class="field-label">Document Charge</label><span class="field-suffix">₹</span></div><input type="number" id="documentCharge" value="5000" step="500" min="0" /></div>
+        <div class="field"><div class="field-top"><label class="field-label">Monthly Interest Rate</label><span class="field-suffix">% / month</span></div><input type="number" id="interestRate" value="1.25" step="0.05" min="0" /></div>
+      </div>
+      <div class="link-row">
+        <div class="field" style="margin-bottom:0;"><div class="field-top"><label class="field-label">Tenure</label><span class="field-suffix">months</span></div><input type="number" id="tenure" value="24" step="1" min="1" /></div>
+        <div class="field" style="margin-bottom:0;"><div class="field-top"><label class="field-label">Max Monthly EMI You Can Pay</label><span class="field-suffix accent">₹</span></div><input type="number" id="emiField" class="accent" step="100" min="0" /></div>
+      </div>
+      <div class="hint">Change either field — the other updates to match.</div>
+      <div class="field" id="rateTargetField" style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);"><div class="field-top"><label class="field-label">Max Monthly EMI (Rate Adjusts)</label><span class="field-suffix accent">₹</span></div><input type="number" id="rateTargetEmi" class="accent" step="100" min="0" /><div class="hint" id="rateTargetNote"></div></div>
+    </div>
+    <div class="readout-panel">
+      <svg class="gauge" width="220" height="140" viewBox="0 0 220 140">
+        <path id="gaugeBg" fill="none" stroke="#2E313C" stroke-width="10" stroke-linecap="round" />
+        <path id="gaugeFill" fill="none" stroke="#4FC3F7" stroke-width="10" stroke-linecap="round" />
+        <g id="ticks"></g><line id="needle" stroke="var(--text)" stroke-width="3" stroke-linecap="round" />
+        <circle cx="110" cy="110" r="6" fill="#4FC3F7" />
+      </svg>
+      <div class="emi-label">Monthly EMI</div><div class="emi-value" id="emiDisplay">₹4,480</div>
+      <div class="stats">
+        <div><div class="stat-label">Loan Amount</div><div class="stat-value" id="statLoan">₹85,000</div></div>
+        <div><div class="stat-label">Monthly Interest</div><div class="stat-value" id="statMonthlyInterest">₹935</div></div>
+        <div><div class="stat-label">Monthly Principal</div><div class="stat-value" id="statPrincipal">₹0</div></div>
+        <div><div class="stat-label">Total Payable</div><div class="stat-value" id="statTotalPayable">₹1,07,440</div></div>
+        <div><div class="stat-label">Total Interest</div><div class="stat-value" id="statTotalInterest2">₹0</div></div>
+      </div>
+      <div class="floor-note" id="floorNote"></div>
+    </div>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+function applyTheme(theme){document.documentElement.setAttribute("data-theme",theme);$("themeToggleBtn").textContent=theme==="light"?"☀️":"🌙";try{localStorage.setItem("emiCalcTheme",theme)}catch(e){}}
+function toggleTheme(){const c=document.documentElement.getAttribute("data-theme")==="light"?"light":"dark";applyTheme(c==="light"?"dark":"light")}
+(function(){let s="light";try{const migrated=localStorage.getItem("emiCalcThemeMigrated");if(!migrated){s="light";localStorage.setItem("emiCalcTheme","light");localStorage.setItem("emiCalcThemeMigrated","1")}else{s=localStorage.getItem("emiCalcTheme")||"light"}}catch(e){}applyTheme(s)})();
+function fmtINR(n){const num=Math.round(n),neg=num<0;let s=Math.abs(num).toString(),last=s.slice(-3),rest=s.slice(0,-3);if(rest)last=","+last;return(neg?"-":"")+"₹"+rest.replace(/\B(?=(\d{2})+(?!\d))/g,",")+last}
+function describeArc(cx,cy,r,start,end){const p=a=>{const rr=a*Math.PI/180;return[cx+r*Math.sin(rr),cy-r*Math.cos(rr)]},[x1,y1]=p(start),[x2,y2]=p(end);return`M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`}
+const cx=110,cy=110,r=86,ticksGroup=$("ticks");for(let i=0;i<9;i++){const a=-90+i*22.5,rr=a*Math.PI/180,line=document.createElementNS("http://www.w3.org/2000/svg","line");line.setAttribute("x1",cx+(r+10)*Math.sin(rr));line.setAttribute("y1",cy-(r+10)*Math.cos(rr));line.setAttribute("x2",cx+(r+16)*Math.sin(rr));line.setAttribute("y2",cy-(r+16)*Math.cos(rr));line.setAttribute("stroke","#4B4E5A");line.setAttribute("stroke-width","2");ticksGroup.appendChild(line)}
+$("gaugeBg").setAttribute("d",describeArc(cx,cy,r,-90,90));
+let emiFocused=false;$("emiField").addEventListener("focus",()=>emiFocused=true);$("emiField").addEventListener("blur",()=>emiFocused=false);
+let bikeMode="new";
+function setMode(mode){bikeMode=mode;$("modeNewBtn").classList.toggle("active",mode==="new");$("modeOldBtn").classList.toggle("active",mode==="old");$("downPaymentField").classList.toggle("hidden",mode==="old");$("bikeAmountLabel").textContent=mode==="old"?"Old Bike Value":"Bike Amount";if(mode==="old"){$("downPayment").value=0;$("interestRate").value=2;$("bikeAmount").value="";$("documentCharge").value="";$("tenure").value=12}else{$("interestRate").value=1.25;$("bikeAmount").value="";$("documentCharge").value=5000;$("downPayment").value="";$("tenure").value=24}render()}
+function getNum(id){const v=$(id).value;return v===""?0:Number(v)}
+function toggleFold(key){const body=$(key+"Body"),arrow=$(key+"Arrow"),open=body.classList.toggle("open");arrow.classList.toggle("open",open)}
+function computeLoan(){const bikeAmount=getNum("bikeAmount"),down=bikeMode==="old"?0:getNum("downPayment"),doc=getNum("documentCharge"),rate=getNum("interestRate"),loan=Math.max(bikeAmount-down,0)+doc,interest=loan*(rate/100);return{loanAmount:loan,monthlyInterest:interest}}
+function render(){const bikeAmount=getNum("bikeAmount");if($("bikeAmount").value===""){$("emiField").value="";$("emiDisplay").textContent="";$("statLoan").textContent="";$("statMonthlyInterest").textContent="";$("statPrincipal").textContent="";$("statTotalInterest2").textContent="";$("statTotalPayable").textContent="";$("floorNote").textContent="";return}
+const down=bikeMode==="old"?0:getNum("downPayment"),doc=getNum("documentCharge"),rate=getNum("interestRate"),tenure=Math.max(getNum("tenure")||1,1),loan=Math.max(bikeAmount-down,0)+doc,baseInterest=loan*(rate/100),principal=loan/tenure,rawEmi=principal+baseInterest,emi=Math.round(rawEmi/10)*10,monthlyInterest=baseInterest,total=emi*tenure,totalInterest=Math.max(total-loan,0);
+if(!emiFocused)$("emiField").value=emi||"";$("emiDisplay").textContent=fmtINR(emi);$("statLoan").textContent=fmtINR(loan);$("statMonthlyInterest").textContent=fmtINR(monthlyInterest);$("statPrincipal").textContent=fmtINR(principal);$("statTotalInterest2").textContent=fmtINR(totalInterest);$("statTotalPayable").textContent=fmtINR(total);$("floorNote").textContent=monthlyInterest>0?`EMI can never go below ${fmtINR(monthlyInterest)}/month — that's the pure interest charge on this loan.`:"";
+const max=Math.max(10000,Math.ceil(emi*1.4/1000)*1000),pct=Math.min(Math.max(emi/max,0),1),angle=-90+pct*180,rad=angle*Math.PI/180;$("gaugeFill").setAttribute("d",describeArc(cx,cy,r,-90,angle));$("needle").setAttribute("x1",cx);$("needle").setAttribute("y1",cy);$("needle").setAttribute("x2",cx+r*Math.sin(rad));$("needle").setAttribute("y2",cy-r*Math.cos(rad))}
+const TENURE_OPTIONS=[6,8,10,12,15,18,20,24,30,36];
+function handleEmiInput(){const{loanAmount,monthlyInterest}=computeLoan(),s=$("emiField").value;if(s===""){render();return}const target=Number(s);if(!isFinite(target)||target<=monthlyInterest){render();return}const neededTenure=loanAmount/(target-monthlyInterest);let fit=TENURE_OPTIONS.find(t=>t>=neededTenure);if(!fit)fit=TENURE_OPTIONS[TENURE_OPTIONS.length-1];$("tenure").value=fit;render()}
+["bikeAmount","downPayment","documentCharge","interestRate","tenure"].forEach(id=>$(id).addEventListener("input",render));$("emiField").addEventListener("input",handleEmiInput);
+function handleRateTargetInput(){const{loanAmount,monthlyInterest}=computeLoan(),s=$("rateTargetEmi").value;if(s===""){$("rateTargetNote").textContent="";return}const target=Number(s);if(!isFinite(target)||loanAmount<=0){$("rateTargetNote").textContent="";return}const neededTenure=loanAmount/Math.max(target-monthlyInterest,0.01);let fit=TENURE_OPTIONS.find(t=>t>=neededTenure);if(!fit)fit=TENURE_OPTIONS[TENURE_OPTIONS.length-1];$("tenure").value=fit;const principalPerMonth=loanAmount/fit;if(target<=principalPerMonth){$("rateTargetNote").textContent=`Too low — EMI must exceed principal portion (${fmtINR(principalPerMonth)}/month) at ${fit}mo tenure.`;render();return}const reqRate=(target-principalPerMonth)*100/loanAmount;$("interestRate").value=reqRate.toFixed(2);$("rateTargetNote").textContent=`Tenure set to ${fit}mo, rate set to ${reqRate.toFixed(2)}%/month.`;render()}
+$("rateTargetEmi").addEventListener("input",handleRateTargetInput);$("tenure").addEventListener("input",handleRateTargetInput);
+render();
+</script>
+</body>
+</html>
